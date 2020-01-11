@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"strings"
 	"sync"
+	"time"
 )
 
 type Info struct {
@@ -16,7 +17,7 @@ func main() {
 		width = 2
 	)
 
-	ssc := make(chan string) // Producer sends messages through the ssc.
+	ssc := make(chan string)
 	go func() {
 		defer close(ssc)
 
@@ -25,20 +26,20 @@ func main() {
 		}
 	}()
 
-
 	infos := make(chan *Info)
 
-	go func() { // consumer
+	go func() {
 		defer close(infos)
 
 		var wg sync.WaitGroup
 		wg.Add(width)
 
 		for iter := 0; iter < width; iter++ {
-			go func(n int) { // digester
+			go func(n int) {
 				defer wg.Done()
 
 				for s := range ssc {
+					time.Sleep(time.Second * 2)
 					i := &Info{
 						routine: n,
 						s:       strings.ToUpper(s),
