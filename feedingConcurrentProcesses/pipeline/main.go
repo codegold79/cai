@@ -12,11 +12,10 @@ type Info struct {
 }
 
 func main() {
-	// configuration status, place at top in a var block
 	var (
 		width = 2
 	)
-	// ssc is strings channel
+
 	ssc := make(chan string)
 	go func() {
 		// .
@@ -30,11 +29,7 @@ func main() {
 
 	var wg sync.WaitGroup
 	wg.Add(width)
-	// changed i to iter to show it is out of scope of the anonymous function.
 	for iter := 0; iter < width; iter++ {
-		// don't be tempted to add to wait group here. it migth be cleared by go routine
-		// called, then throw done, before having the chance to add the next. This is why
-		// you should only use Add once.
 		go func(n int) {
 			defer wg.Done()
 			for s := range ssc {
@@ -48,6 +43,10 @@ func main() {
 	}
 
 	wg.Wait()
+	// The problem is that infos channel can't be filled above for loop because
+	// there's no one there to take from the channel (below). But code below won't
+	// happen because we're asking them to wg.Wait(). 
+	// Channels are a way to signal to wait, but Done will need to be added.
 	for i := range infos {
 		fmt.Println(i)
 	}
