@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"sync"
@@ -24,15 +25,24 @@ func main() {
 		width = 2
 	)
 
-	infos := orchestrate(width, data())
+	// Cancel context will send to the channel an empty struct.
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
 
+	infos := orchestrate(ctx, width, data())
+
+	var ct int
 	for i := range infos {
 		fmt.Println(i)
+		ct++
+		if ct >= 4 {
+			cancel()
+		}
 	}
 }
 
-func orchestrate(width int, d []string) <-chan *Info {
-	ssc := produce(data())
+func orchestrate(ctx context.Context, width int, d []string) <-chan *Info {
+	ssc := produce(ctx, d)
 	infos := consume(width, ssc)
 	return infos
 }
@@ -49,13 +59,18 @@ func data() []string {
 	}
 }
 
-func produce(d []string) <-chan string {
+func produce(ctx context.Context, d []string) <-chan string {
 	ssc := make(chan string)
 	go func() {
 		defer close(ssc)
 
-		for _, s := range data() {
-			ssc <- s
+		for _, s := range d {
+			select {
+			case ssc <- s:
+			case <-ctx.Done():
+				fmt.Println("done")
+				return
+			}
 		}
 	}()
 
