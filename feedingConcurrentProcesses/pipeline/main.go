@@ -6,6 +6,8 @@ import (
 	"strings"
 	"sync"
 	"time"
+
+	"github.com/codemodus/sigmon"
 )
 
 type Info struct {
@@ -29,15 +31,16 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
+	sm := sigmon.New(func(s *sigmon.State) {
+		fmt.Println(s.Signal)
+		cancel()
+	})
+	sm.Start()
+
 	infos := orchestrate(ctx, width, data())
 
-	var ct int
 	for i := range infos {
 		fmt.Println(i)
-		ct++
-		if ct >= 4 {
-			cancel()
-		}
 	}
 }
 
