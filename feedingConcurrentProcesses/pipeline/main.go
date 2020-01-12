@@ -46,7 +46,8 @@ func main() {
 
 func orchestrate(ctx context.Context, width int, d []string) <-chan *Info {
 	ssc := produce(ctx, d)
-	infos := consume(width, ssc)
+	infoX := consume(width, ssc)
+	infos := consumeAnother(width*2, infoX)
 	return infos
 }
 
@@ -101,6 +102,16 @@ func consume(width int, ssc <-chan string) <-chan *Info {
 		}
 
 		wg.Wait()
+	}()
+
+	return infos
+}
+
+func consumeAnother(width int, in <-chan *Info, fn func(a *Info)) <-chan *Info {
+	out := make(chan *Info)
+
+	go func() {
+		// similar to consume()
 	}()
 
 	return infos
