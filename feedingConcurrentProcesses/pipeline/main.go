@@ -24,12 +24,17 @@ func main() {
 		width = 2
 	)
 
-	ssc := produce(data())
-	infos := consume(width, ssc)
+	infos := orchestrate(width, data())
 
 	for i := range infos {
 		fmt.Println(i)
 	}
+}
+
+func orchestrate(width int, d []string) <-chan *Info {
+	ssc := produce(data())
+	infos := consume(width, ssc)
+	return infos
 }
 
 func data() []string {
