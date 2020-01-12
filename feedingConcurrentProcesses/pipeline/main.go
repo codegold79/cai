@@ -12,45 +12,20 @@ type Info struct {
 	s       string
 }
 
+func newInfo(n int, s string) *Info {
+	return &Info{
+		routine: n,
+		s:       strings.ToUpper(s),
+	}
+}
+
 func main() {
 	var (
 		width = 2
 	)
 
-	ssc := make(chan string)
-	go func() {
-		defer close(ssc)
-
-		for _, s := range data() {
-			ssc <- s
-		}
-	}()
-
-	infos := make(chan *Info)
-
-	go func() {
-		defer close(infos)
-
-		var wg sync.WaitGroup
-		wg.Add(width)
-
-		for iter := 0; iter < width; iter++ {
-			go func(n int) {
-				defer wg.Done()
-
-				for s := range ssc {
-					time.Sleep(time.Second * 2)
-					i := &Info{
-						routine: n,
-						s:       strings.ToUpper(s),
-					}
-					infos <- i
-				}
-			}(iter)
-		}
-
-		wg.Wait()
-	}()
+	ssc := produce(data())
+	infos := consume(width, ssc)
 
 	for i := range infos {
 		fmt.Println(i)
@@ -67,4 +42,43 @@ func data() []string {
 		"other",
 		"thing",
 	}
+}
+
+func produce(d []string) <-chan string {
+	ssc := make(chan string)
+	go func() {
+		defer close(ssc)
+
+		for _, s := range data() {
+			ssc <- s
+		}
+	}()
+
+	return ssc
+}
+
+func consume(width int, ssc <-chan string) <-chan *Info {
+	infos := make(chan *Info)
+
+	go func() {
+		defer close(infos)
+
+		var wg sync.WaitGroup
+		wg.Add(width)
+
+		for iter := 0; iter < width; iter++ {
+			go func(n int) {
+				defer wg.Done()
+
+				for s := range ssc {
+					time.Sleep(time.Second * 2)
+					infos <- newInfo(n, s)
+				}
+			}(iter)
+		}
+
+		wg.Wait()
+	}()
+
+	return infos
 }
