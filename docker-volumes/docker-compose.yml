@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  ametrine:
+    image: ametrine:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-Ametrine
+    volumes:
+      - rock_data:/app/amet
+  bastnasite:
+    image: bastnasite:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-Bastnasite
+    volumes:
+      - rock_data:/app/bast
+volumes:
+  rock_data:

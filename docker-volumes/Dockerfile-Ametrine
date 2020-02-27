@@ -1,0 +1,6 @@
+# Copy the file on host machine to the docker volume.
+FROM alpine:3.11
+WORKDIR /app/amet
+COPY precious-stone-info.txt .
+
+CMD ["echo","The file has been copied to volume from Ametrine."]
