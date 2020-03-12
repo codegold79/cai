@@ -1,0 +1,7 @@
+FROM photon:3.0
+
+WORKDIR /app/citrine_scripts
+COPY bashFail.sh .
+
+ENTRYPOINT ["./bashFail.sh"]
+

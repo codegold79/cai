@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  eudialyte:
+    image: eudialyte:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-Eudialyte
+  druzy:
+    image: druzy:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-Druzy

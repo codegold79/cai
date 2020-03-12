@@ -1,0 +1,6 @@
+FROM photon:3.0
+
+WORKDIR /app/druzy_scripts
+COPY bashPass.sh .
+
+ENTRYPOINT ["./bashPass.sh"]
