@@ -11,6 +11,9 @@ for i in *
     do wc -c $i;
 done
 
-echo "Send exit code 1 after 3 second delay"
+echo "Send exit code 1 after two delays"
+echo "Start first delay"
 sleep 3
+echo "Start second delay"
+sleep 20
 exit 1
