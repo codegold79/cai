@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  fluorite:
+    image: fluorite:v1
+    build:
+      context: .
+      dockerfile: dockerfile-fluorite
+  garnet:
+    image: garnet:v1
+    build:
+      context: .
+      dockerfile: dockerfile-garnet
