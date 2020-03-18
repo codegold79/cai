@@ -1,0 +1,13 @@
+version: "3.7"
+
+services:
+  citrine:
+    image: citrine:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-Citrine
+  druzy:
+    image: druzy:v1
+    build:
+      context: .
+      dockerfile: Dockerfile-Druzy

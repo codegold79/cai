@@ -1,0 +1,7 @@
+FROM photon:3.0
+
+WORKDIR /app/eudialyte_scripts
+COPY bashDelayFail.sh .
+
+ENTRYPOINT ["./bashDelayFail.sh"]
+
