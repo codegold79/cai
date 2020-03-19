@@ -62,10 +62,11 @@ func main() {
 		},
 		disk{false, "512 GB PCle SSD"},
 		accessory{
-			name:    "ScreenPad 2.0",
 			purpose: "secondary 5.65 in interactive touchscreen",
+			name:    "ScreenPad 2.0",
 		},
 	}
 
-	fmt.Println(vivoBook, vivoBook2)
+	// Structs can be compared. Output: true
+	fmt.Println(vivoBook == vivoBook2)
 }
