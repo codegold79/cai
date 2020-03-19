@@ -33,7 +33,7 @@ do
 			;;
 	esac
 
-	echo "$((count-i-1)) chimes remain.\n"
+	printf "$((count-i-1)) chimes remain.\n\n"
 done
 
 echo "Timer complete"
