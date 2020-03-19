@@ -1,0 +1,8 @@
+[vcenter]
+server = "10.0.0.1"
+user = "administrator@corp.local"
+password = "DontUseThisPassword"
+
+[tag]
+urn="urn:vmomi:InventoryServiceTag:4c49931b-5fe5-443e-bde6-8620d47573e9:GLOBAL"
+action = "attach"
