@@ -32,4 +32,8 @@ do
 			afplay ~/Downloads/audio/tng_replicator.mp3
 			;;
 	esac
+
+	echo "$((count-i-1)) chimes remain.\n"
 done
+
+echo "Timer complete"
