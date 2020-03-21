@@ -15,7 +15,7 @@ read sound
 
 for (( i=0; i<count; i++ ))
 do
-	echo "Next chime in $int minute(s)..."
+	echo `date +"[%D %H:%M %p] "`"Next alert in $int minute(s)..."
 	sleep $(echo "$int*60" | bc)
 
 	case $sound in
