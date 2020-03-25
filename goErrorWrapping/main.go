@@ -18,8 +18,11 @@ func main() {
 }
 
 // locateStore, goToStore, and buyLaptop return both wrapped and not wrapped errors
-func locateStore() error {
-	return errors.New("no store nearby")
+func locateStore() locateError {
+	return locateError{
+		msg:"no store nearby",
+		fault: errors.New("no store nearby"),
+	}
 }
 
 func goToStore() error {
@@ -30,20 +33,6 @@ func goToStore() error {
 func buyLaptop() error {
 	err := goToStore()
 	return err
-}
-
-type appError struct {
-	msg   string
-	fault error
-}
-
-// Make appError type meet the wrapError interface requirements
-func (ae appError) Unwrap() error {
-	return ae.fault
-}
-
-func (ae appError) Error() string {
-	return ae.msg
 }
 
 // setupLaptop, writeProgram, runApp all return wrapped errors.
