@@ -36,4 +36,4 @@ do
 	printf "$((count-i-1)) chimes remain.\n\n"
 done
 
-echo "Timer complete"
+echo `date +"[%D %H:%M %p] "`"Timer complete"
