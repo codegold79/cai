@@ -4,14 +4,21 @@
 # Depends on sound player paplay and bash calculator bc (in order to be able to use float numbers,
 # as bash only allows for integer calculations).
 
-echo "Timer interval (in minutes)?"
-read int
+if [[ $# -eq 0 ]] ; then
+	echo "Timer interval (in minutes)?"
+	read int
 
-echo "Timer number of executions?"
-read count
+	echo "Timer number of executions?"
+	read count
 
-echo "Sound choice? [1] door chime [2] sickbay replicator [3] TNG replicator"
-read sound
+	echo "Sound choice? [1] door chime [2] sickbay replicator [3] TNG replicator"
+	read sound
+
+else
+	int=$1
+	count=$2
+	sound=$3
+fi
 
 for (( i=0; i<count; i++ ))
 do
