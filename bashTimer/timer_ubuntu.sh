@@ -11,13 +11,13 @@ if [[ $# -eq 0 ]] ; then
 	echo "Timer number of executions?"
 	read count
 
-	echo "Sound choice? [1] door chime [2] sickbay replicator [3] TNG replicator"
+	echo "Sound choice? [1] door chime [2] sickbay replicator [3] TNG replicator [4] ding [5] Tibeten bowl"
 	read sound
 
 else
 	int=$1
-	count=$2
-	sound=$3
+	count=${2:-50}
+	sound=${3:-5}
 fi
 
 for (( i=0; i<count; i++ ))
@@ -38,6 +38,13 @@ do
 			echo "Play TNG replicator"
 			paplay ~/Downloads/audio/processed/tng_replicator.wav
 			;;
+		4)
+			echo "Play gkillhour_ding-4"
+			paplay /media/hdd/Sounds/freesound.org/16494__gkillhour__dings/267337__gkillhour__ding-4.wav
+			;;
+		5)
+			echo "Play dersinnsspace__tibetan-bowl-center-hit"
+			paplay /media/hdd/Sounds/freesound.org/421829__dersinnsspace__tibetan-bowl-center-hit.wav
 	esac
 
 	printf "$((count-i-1)) chimes remain.\n\n"
