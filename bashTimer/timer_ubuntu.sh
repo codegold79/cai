@@ -40,11 +40,11 @@ do
 			;;
 		4)
 			echo "Play gkillhour_ding-4"
-			paplay /media/hdd/Sounds/freesound.org/16494__gkillhour__dings/267337__gkillhour__ding-4.wav
+			paplay ~/Audio/sounds/freesound.org/16494__gkillhour__dings/267337__gkillhour__ding-4.wav
 			;;
 		5)
 			echo "Play dersinnsspace__tibetan-bowl-center-hit"
-			paplay /media/hdd/Sounds/freesound.org/421829__dersinnsspace__tibetan-bowl-center-hit.wav
+			paplay ~/Audio/sounds/freesound.org/421829__dersinnsspace__tibetan-bowl-center-hit.wav & 
 	esac
 
 	printf "$((count-i-1)) chimes remain.\n\n"
